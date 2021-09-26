@@ -1,8 +1,17 @@
 html, body{
     margin: 0;
     height: 100vh;
+    background-color: #36393f;
 }
 
 .todo-app{
-    height: 100%
+    background-color: #2f3136;
+}
+
+.todo-row{
+    cursor: pointer
+}
+
+input{
+    background-color: #40444b;
 }

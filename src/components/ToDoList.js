@@ -4,7 +4,7 @@ import ToDoForm from "./ToDoForm";
 
 function ToDoList() {
   const [todos, setTodos] = useState([]);
-  const h1Style = "text-center text-4xl font-bold";
+  const h1Style = "text-center text-4xl font-bold text-white";
 
   const addTodo = (todo) => {
     if (!todo.text || /^\s*$/.test(todo.text)) {
@@ -16,20 +16,41 @@ function ToDoList() {
     setTodos(newTodos);
   };
 
-  const completeTodo = id =>{
-      let updatedTodos = todos.map(todo =>{
-          if (todo.id === id){
-              todo.isComplete = !todo.isComplete
-          }
-      })
-      setTodos(updatedTodos)
-  }
+  const removeTodo = (id) => {
+    const removeArr = [...todos].filter((todo) => todo.id !== id);
+
+    setTodos(removeArr);
+  };
+
+  const updateTodo = (todoId, newValue) => {
+    if (!newValue.text || /^\s*$/.test(newValue.text)) {
+      return;
+    }
+    setTodos((prev) =>
+      prev.map((item) => (item.id === todoId ? newValue : item))
+    );
+  };
+
+  const completeTodo = id => {
+    let updatedTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.isComplete = !todo.isComplete;
+      }
+      return todo
+    });
+    setTodos(updatedTodo);
+  };
 
   return (
-    <div>
+    <div className="flex-shrink">
       <h1 className={`${h1Style}`}>Add to your todo list</h1>
       <ToDoForm onSubmit={addTodo} />
-      <ToDo todos={todos} completeTodo={completeTodo}/>
+      <ToDo
+        todos={todos}
+        completeTodo={completeTodo}
+        removeTodo={removeTodo}
+        updateTodo={updateTodo}
+      />
     </div>
   );
 }
